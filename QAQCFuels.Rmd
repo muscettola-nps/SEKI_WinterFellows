@@ -22,7 +22,11 @@ library(EnvStats)
 Lets use this Rmd as a place to work through the qa/qc function with our fuels data...
 
 ```{r cars}
-summary(cars)
+getwd()
+library(here)
+here()
+#load data 
+Fuels_1000s <- read.csv(here("data","Surface Fuels - 1000Hr_XPT.csv"))
 ```
 
 ## Including Plots
