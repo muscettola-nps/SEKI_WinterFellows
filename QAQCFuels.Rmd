@@ -1,0 +1,36 @@
+---
+title: "QA/QC Fuels"
+author: "Sophie Dua"
+date: "2026-02-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+# writexl is used to create excel files from within R
+library(writexl)
+# knitr is used to create output files from R Markdown
+library(knitr)
+# EnvStats is needed for the rosnerTest() function
+library(EnvStats)
+```
+
+## QA/QC fuels
+
+Lets use this Rmd as a place to work through the qa/qc function with our fuels data...
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
