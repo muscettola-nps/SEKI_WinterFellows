@@ -7,6 +7,14 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+# writexl is used to create excel files from within R
+library(writexl)
+# knitr is used to create output files from R Markdown
+library(knitr)
+# EnvStats is needed for the rosnerTest() function
+library(EnvStats)
 ```
 
 ## QA/QC fuels 
