@@ -21,6 +21,7 @@ library(EnvStats)
 
 Lets use this Rmd as a place to work through the qa/qc function with our fuels data...
 
+### Setting working directory and loading data
 ```{r cars}
 getwd()
 library(here)
@@ -29,12 +30,25 @@ here()
 Fuels_1000s <- read.csv(here("data","Surface Fuels - 1000Hr_XPT.csv"))
 ```
 
-## Including Plots
+### Cleaning up the data frame
+```{r}
+# Clean up data frame
+Fuels1000_all <- Fuels_1000s %>%
+  # Separate Date column into Date and Time columns
+  separate(Date, sep = " ", into = c("Date", "Time")) %>%
+  separate(Date, sep = "/", into = c("Month", "Day", "Year"), remove = FALSE) %>% 
+  select(!c("Month", "Day")) %>% 
+  # Separate MacroPlotName to get Monitoring type
+  separate(MacroPlot.Name, sep = " ", into = c("MonitoringType", "Plot"), remove = FALSE)
 
-You can also embed plots, for example:
+# Ensure blanks in Visited column are NA
+Fuels1000_all$Visited[Fuels1000_all$Visited==""] <- NA
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+# Filter for only data
+Fuels1000_data <- Fuels1000_all %>%
+  filter(is.na(Visited))
+
+# Filter for only headers
+Fuels1000_header <- Fuels1000_all %>%
+  filter(!is.na(Visited))
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
