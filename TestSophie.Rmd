@@ -14,6 +14,7 @@ library(tidyverse)
 
 ```{r cars}
 print("Hello")
+print("Try this")
 ```
 
 ## Including Plots
