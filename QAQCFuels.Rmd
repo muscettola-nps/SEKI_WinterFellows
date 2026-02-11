@@ -1,0 +1,54 @@
+---
+title: "QA/QC Fuels"
+author: "Sophie Dua"
+date: "2026-02-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+# writexl is used to create excel files from within R
+library(writexl)
+# knitr is used to create output files from R Markdown
+library(knitr)
+# EnvStats is needed for the rosnerTest() function
+library(EnvStats)
+```
+
+## QA/QC fuels
+
+Lets use this Rmd as a place to work through the qa/qc function with our fuels data...
+
+### Setting working directory and loading data
+```{r cars}
+getwd()
+library(here)
+here()
+#load data 
+Fuels_1000s <- read.csv(here("data","Surface Fuels - 1000Hr_XPT.csv"))
+```
+
+### Cleaning up the data frame
+```{r}
+# Clean up data frame
+Fuels1000_all <- Fuels_1000s %>%
+  # Separate Date column into Date and Time columns
+  separate(Date, sep = " ", into = c("Date", "Time")) %>%
+  separate(Date, sep = "/", into = c("Month", "Day", "Year"), remove = FALSE) %>% 
+  select(!c("Month", "Day")) %>% 
+  # Separate MacroPlotName to get Monitoring type
+  separate(MacroPlot.Name, sep = " ", into = c("MonitoringType", "Plot"), remove = FALSE)
+
+# Ensure blanks in Visited column are NA
+Fuels1000_all$Visited[Fuels1000_all$Visited==""] <- NA
+
+# Filter for only data
+Fuels1000_data <- Fuels1000_all %>%
+  filter(is.na(Visited))
+
+# Filter for only headers
+Fuels1000_header <- Fuels1000_all %>%
+  filter(!is.na(Visited))
+```
